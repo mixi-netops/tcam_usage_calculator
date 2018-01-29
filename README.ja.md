@@ -8,7 +8,7 @@ tcam_usage_calculator はルータの Config を読み込み、TCAM の使用量
 
 ## セットアップ
 ```bash
-$ python setup.py install
+$ pip install git+https://github.com/xflagstudio/tcam_usage_calculator.git
 ```
 
 ## 使い方

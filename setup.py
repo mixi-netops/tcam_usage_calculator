@@ -34,5 +34,6 @@ setup(
             ],
     },
     install_requires=REQUIRED,
+    python_requires='>=3.6',
     license='MIT'
 )

@@ -8,7 +8,7 @@ This tool is compatible with [Junos OS](https://www.juniper.net/jp/jp/products-s
 
 ## Setup
 ```bash
-$ python setup.py install
+$ pip install git+https://github.com/xflagstudio/tcam_usage_calculator.git
 ```
 
 ## How to use
