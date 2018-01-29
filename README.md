@@ -1,6 +1,6 @@
-# tcam-usage-calculator
-tcam-usage-calculator is a tool to read Config of the router and predict TCAM usage.  
-However, the prediction of tcam-usage-calculator is not perfect and we do not guarantee the operation, so please use it at your own risk.  
+# tcam_usage_calculator
+tcam_usage_calculator is a tool to read Config of the router and predict TCAM usage.  
+However, the prediction of tcam_usage_calculator is not perfect and we do not guarantee the operation, so please use it at your own risk.  
 This tool is compatible with [Junos OS](https://www.juniper.net/jp/jp/products-services/nos/junos/), predict the usage mainly from the definition of Firewall.
 
 ## Operating environment
