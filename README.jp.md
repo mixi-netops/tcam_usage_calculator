@@ -1,5 +1,6 @@
 # tcam-usage-calculator
-tcam-usage-calculator はルータの Config を読み込み、TCAM の使用量を予測するツールです。ただし、使用量の予測は完璧ではないことに注意してください。  
+tcam-usage-calculator はルータの Config を読み込み、TCAM の使用量を予測するツールです。  
+ただし、tcam-usage-calculator の予測は完璧ではなく、動作保証はしませんので自己責任で利用してください。  
 本ツールは [Junos OS](https://www.juniper.net/jp/jp/products-services/nos/junos/) に対応しており、主にFirewallの定義から使用量の予測を行っています。
 
 ## 動作環境
