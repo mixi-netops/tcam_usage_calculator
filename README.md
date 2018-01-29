@@ -4,7 +4,7 @@ However, the prediction of tcam_usage_calculator is not perfect and we do not gu
 This tool is compatible with [Junos OS](https://www.juniper.net/jp/jp/products-services/nos/junos/), predict the usage mainly from the definition of Firewall.
 
 ## Operating environment
-* Pyhton 3.6.4
+* Python 3.6 and higher
 
 ## Setup
 ```bash

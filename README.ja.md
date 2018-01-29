@@ -4,7 +4,7 @@ tcam_usage_calculator はルータの Config を読み込み、TCAM の使用量
 本ツールは [Junos OS](https://www.juniper.net/jp/jp/products-services/nos/junos/) に対応しており、主にFirewallの定義から使用量の予測を行っています。
 
 ## 動作環境
-* Pyhton 3.6.4
+* Pyhton 3.6 以上
 
 ## セットアップ
 ```bash
