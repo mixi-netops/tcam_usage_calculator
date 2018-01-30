@@ -45,3 +45,6 @@ $ tcam_usage_calculator /path/to/config/RouterConfig -d -j
 $ tcam_usage_calculator /path/to/config/RouterConfig -f filterA filterC -j
 [{"filterA": 30}, {"filterC": 32}]
 ```
+
+## ライセンス
+[MIT license](https://github.com/xflagstudio/tcam_usage_calculator/blob/master/LICENSE)
