@@ -3,10 +3,10 @@ import re
 
 
 class Config:
-    '''
+    """
     path: String
         router config filepath.
-    '''
+    """
     def __init__(self, path):
         self.path = path
         self.read()
@@ -32,12 +32,12 @@ class Config:
 
         return firewallLineList
 
-    '''
+    """
     Extract the term defined in a specific filter
 
     filterName: String
     termName: String
-    '''
+    """
     def getTermLineList(self, filterName, termName):
         termLineList = []
 
@@ -50,11 +50,11 @@ class Config:
 
         return termLineList
 
-    '''
+    """
     Extract the 'prefix-list' defined in a specific filter
 
     prefixListName: String
-    '''
+    """
     def getPrefixListLineList(self, prefixListName):
         prefixListLineList = []
         pattern = f"{'set policy-options prefix-list ' + prefixListName}"

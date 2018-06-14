@@ -5,10 +5,10 @@ from ipaddress import summarize_address_range, IPv4Address
 
 
 class Calculator:
-    '''
+    """
     config: Config
         router config parameter.
-    '''
+    """
     def __init__(self, config):
         if type(config) is not Config:
             nl = '\n'
@@ -17,19 +17,19 @@ class Calculator:
 
         self.config = config
 
-    '''
+    """
     name: String
         filter name.
-    '''
+    """
     def hasFilter(self, name):
         return name in self.filrewallDict
 
-    '''
+    """
     filterName: String
         filter name.
     termName: String
         term name.
-    '''
+    """
     def hasTerm(self, filterName, termName):
         termList = self.filrewallDict[filterName]
         for term in termList:
@@ -38,11 +38,11 @@ class Calculator:
 
         return False
 
-    '''
+    """
     FirewallDict Design:
         {filterName:[termName:ExpandedTermCost]}
         ex){'filterA':[{'termA1':0},{'termA2':0}], filterB:[{'termB1':0}]}
-    '''
+    """
     def createFirewallDict(self):
         self.filrewallDict = {}
         filterAndTermNamePattern = \
@@ -60,10 +60,10 @@ class Calculator:
                 if not existTerm:
                     self.filrewallDict[filterName].append({termName: 0})
 
-    '''
+    """
     This function is supposed to be executed after
     execution of createFirewallDict
-    '''
+    """
     def setExpandedTermCost(self):
         for filterName, terms in self.filrewallDict.items():
             for termDict in terms:
@@ -133,26 +133,26 @@ class Calculator:
 
         return count
 
-    '''
+    """
     name: String
         port name.
         ex) 'https'
 
     translat port name to number.
     If the name is a number, it returns as is.
-    '''
+    """
     def translatPortNumber(self, name):
         if name.isdigit():
             return name
 
         return getservbyname(name)
 
-    '''
+    """
     portList:
         TCP/IP port list.
 
     Calculate considering consecutive port optimization.
-    '''
+    """
     def getPortCount(self, portList):
         portListlen = len(portList)
         if portListlen <= 1:
@@ -245,11 +245,11 @@ class Calculator:
 
         return cost
 
-    '''
+    """
         FirewallCostDict Design:
             {filterName:cost}
             ex){'filterA':100, filterB:200}
-    '''
+    """
     def makeFirewallCostDict(self):
         self.firewallCostDict = {}
         for filterName, termList in self.filrewallDict.items():
