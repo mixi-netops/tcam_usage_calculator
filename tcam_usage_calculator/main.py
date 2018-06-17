@@ -14,34 +14,34 @@ def main():
     parser.add_argument("-j", "--json", action="store_true", help="json mode")
     args = parser.parse_args()
 
-    configFilepath = args.config[0]
-    calculator = Calculator(Config(configFilepath))
-    calculator.createFirewallDict()
-    calculator.setExpandedTermCost()
+    config_filepath = args.config[0]
+    calculator = Calculator(Config(config_filepath))
+    calculator.create_firewall_dict()
+    calculator.set_expanded_term_cost()
 
-    resultList = []
+    result_list = []
 
     if args.detail:
-        filterList = args.filter
-        calculator.makeFirewallCostDict()
-        for name, cost in calculator.firewallCostDict.items():
-            resultList.append({name: cost})
+        filter_list = args.filter
+        calculator.make_firewall_cost_dict()
+        for name, cost in calculator.firewall_cost_dict.items():
+            result_list.append({name: cost})
 
     if args.filter:
-        filterList = args.filter
-        calculator.makeFirewallCostDict()
-        for name, cost in calculator.firewallCostDict.items():
-            if name in filterList:
-                resultList.append({name: cost})
+        filter_list = args.filter
+        calculator.make_firewall_cost_dict()
+        for name, cost in calculator.firewall_cost_dict.items():
+            if name in filter_list:
+                result_list.append({name: cost})
     else:
         # TotalCost is not displayed only when the --filter option is enabled
-        resultList.append({"TotalCost": calculator.getTotalTermCost()})
+        result_list.append({"TotalCost": calculator.get_total_term_cost()})
 
     if args.json:
-        print(json.dumps(resultList))
+        print(json.dumps(result_list))
     else:
-        for costDict in resultList:
-            for name, cost in costDict.items():
+        for cost_dict in result_list:
+            for name, cost in cost_dict.items():
                 print(f"{name + ': ' + str(cost)}")
 
 

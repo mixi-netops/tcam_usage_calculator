@@ -22,14 +22,14 @@ class Config:
 
         self.raw = config
 
-    def getFirewallLineList(self):
-        firewallLineList = []
+    def get_firewall_line_list(self):
+        firewall_line_list = []
 
         for line in self.raw.split('\n'):
             if line.find('set firewall family inet') >= 0:
-                firewallLineList.append(line)
+                firewall_line_list.append(line)
 
-        return firewallLineList
+        return firewall_line_list
 
     """
     Extract the term defined in a specific filter
@@ -37,29 +37,29 @@ class Config:
     filterName: String
     termName: String
     """
-    def getTermLineList(self, filterName, termName):
-        termLineList = []
+    def get_term_line_list(self, filter_name, term_name):
+        term_line_list = []
 
-        for line in self.getFirewallLineList():
-            pattern = f"{'^.*' + filterName + '.*' + termName + '.*$'}"
+        for line in self.get_firewall_line_list():
+            pattern = f"{'^.*' + filter_name + '.*' + term_name + '.*$'}"
             if not re.match(pattern, line):
                 continue
             else:
-                termLineList.append(line)
+                term_line_list.append(line)
 
-        return termLineList
+        return term_line_list
 
     """
     Extract the 'prefix-list' defined in a specific filter
 
     prefixListName: String
     """
-    def getPrefixListLineList(self, prefixListName):
-        prefixListLineList = []
-        pattern = f"{'set policy-options prefix-list ' + prefixListName}"
+    def get_prefix_list_line_list(self, prefix_list_name):
+        prefix_list_line_list = []
+        pattern = f"{'set policy-options prefix-list ' + prefix_list_name}"
 
         for line in self.raw.split('\n'):
             if line.find(pattern) >= 0:
-                prefixListLineList.append(line)
+                prefix_list_line_list.append(line)
 
-        return prefixListLineList
+        return prefix_list_line_list
