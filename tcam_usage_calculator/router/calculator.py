@@ -10,6 +10,9 @@ class Calculator:
         router config parameter.
     """
     def __init__(self, config):
+        self.filrewall_dict = {}
+        self.firewall_cost_dict = {}
+
         if type(config) is not Config:
             nl = '\n'
             print(f"{'ERROR!' + nl}{config + 'is not Config Class.'}")
@@ -44,7 +47,6 @@ class Calculator:
         ex){'filterA':[{'termA1':0},{'termA2':0}], filterB:[{'termB1':0}]}
     """
     def create_firewall_dict(self):
-        self.filrewall_dict = {}
         filter_and_term_name_pattern = \
             r'^.* filter ([!-~]+) term ([!-~]+) .*$'
 
@@ -251,7 +253,6 @@ class Calculator:
             ex){'filterA':100, filterB:200}
     """
     def make_firewall_cost_dict(self):
-        self.firewall_cost_dict = {}
         for filter_name, termList in self.filrewall_dict.items():
             firewall_cost = 0
             for term in termList:

@@ -7,7 +7,9 @@ class Config:
         router config filepath.
     """
     def __init__(self, path):
+        self.raw = None
         self.path = path
+
         self.read()
 
     def read(self):
