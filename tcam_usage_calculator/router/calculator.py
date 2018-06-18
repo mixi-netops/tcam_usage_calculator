@@ -1,5 +1,5 @@
 import re
-from tcam_usage_calculator.router.config import Config
+from .config import Config
 from socket import getservbyname
 from ipaddress import summarize_address_range, IPv4Address
 

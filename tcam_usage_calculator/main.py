@@ -1,5 +1,5 @@
-from tcam_usage_calculator.router.config import Config
-from tcam_usage_calculator.router.calculator import Calculator
+from .router.config import Config
+from .router.calculator import Calculator
 from argparse import ArgumentParser
 import json
 
