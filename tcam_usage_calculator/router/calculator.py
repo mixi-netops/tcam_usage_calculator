@@ -140,10 +140,10 @@ class Calculator:
         port name.
         ex) 'https'
 
-    translat port name to number.
+    translate port name to number.
     If the name is a number, it returns as is.
     """
-    def translat_port_number(self, name):
+    def translate_port_number(self, name):
         if name.isdigit():
             return name
 
@@ -198,7 +198,7 @@ class Calculator:
             if re.match(src_port_pattern, line):
                 match = re.search(src_port_pattern, line)
                 raw_port = match.group(1)
-                port_list.append(int(self.translat_port_number(raw_port)))
+                port_list.append(int(self.translate_port_number(raw_port)))
 
         return self.get_port_count(port_list)
 
@@ -211,7 +211,7 @@ class Calculator:
             if re.match(dst_port_pattern, line):
                 match = re.search(dst_port_pattern, line)
                 raw_port = match.group(1)
-                port_list.append(int(self.translat_port_number(raw_port)))
+                port_list.append(int(self.translate_port_number(raw_port)))
 
         return self.get_port_count(port_list)
 
