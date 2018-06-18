@@ -10,7 +10,7 @@ class Calculator:
         router config parameter.
     """
     def __init__(self, config):
-        self.filrewall_dict = {}
+        self.firewall_dict = {}
         self.firewall_cost_dict = {}
 
         if type(config) is not Config:
@@ -25,7 +25,7 @@ class Calculator:
         filter name.
     """
     def has_filter(self, name):
-        return name in self.filrewall_dict
+        return name in self.firewall_dict
 
     """
     filter_name: String
@@ -34,7 +34,7 @@ class Calculator:
         term name.
     """
     def has_term(self, filter_name, term_name):
-        term_list = self.filrewall_dict[filter_name]
+        term_list = self.firewall_dict[filter_name]
         for term in term_list:
             if term_name in term:
                 return True
@@ -56,18 +56,18 @@ class Calculator:
             term_name = match.group(2)
 
             if not self.has_filter(filter_name):
-                self.filrewall_dict[filter_name] = [{term_name: 0}]
+                self.firewall_dict[filter_name] = [{term_name: 0}]
             else:
                 exist_term = self.has_term(filter_name, term_name)
                 if not exist_term:
-                    self.filrewall_dict[filter_name].append({term_name: 0})
+                    self.firewall_dict[filter_name].append({term_name: 0})
 
     """
     This function is supposed to be executed after
     execution of createFirewallDict
     """
     def set_expanded_term_cost(self):
-        for filter_name, terms in self.filrewall_dict.items():
+        for filter_name, terms in self.firewall_dict.items():
             for term_dict in terms:
                 for term_name in term_dict:
                     term_line_list = self.config.get_term_line_list(filter_name=filter_name, term_name=term_name)
@@ -253,7 +253,7 @@ class Calculator:
             ex){'filterA':100, filterB:200}
     """
     def make_firewall_cost_dict(self):
-        for filter_name, termList in self.filrewall_dict.items():
+        for filter_name, termList in self.firewall_dict.items():
             firewall_cost = 0
             for term in termList:
                 for cost in term.values():
