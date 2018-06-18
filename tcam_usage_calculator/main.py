@@ -22,7 +22,6 @@ def main():
     result_list = []
 
     if args.detail:
-        filter_list = args.filter
         calculator.make_firewall_cost_dict()
         for name, cost in calculator.firewall_cost_dict.items():
             result_list.append({name: cost})
