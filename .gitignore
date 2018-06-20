@@ -102,3 +102,6 @@ ENV/
 
 # original config
 slackbot_settings.py
+
+# editor
+.idea
