@@ -11,6 +11,11 @@ This tool is compatible with [Junos OS](https://www.juniper.net/jp/jp/products-s
 $ pip install git+https://github.com/xflagstudio/tcam_usage_calculator.git
 ```
 
+### Docker
+```bash
+$ docker build -t xflagstudio/tcam_usage_calculator:1.0 .
+```
+
 ## How to use
 Confirm TCAM usage of whole Config
 ```bash
@@ -44,6 +49,13 @@ $ tcam_usage_calculator /path/to/config/RouterConfig -d -j
 
 $ tcam_usage_calculator /path/to/config/RouterConfig -f filterA filterC -j
 [{"filterA": 30}, {"filterC": 32}]
+```
+
+### Docker
+```bash
+$ CONFIG_FROM="/path/to/config/RouterConfig"
+$ CONFIG_TO="/tmp/config"
+$ docker run -v "$CONFIG_FROM:$CONFIG_TO" -it xflagstudio/tcam_usage_calculator:1.0 /bin/bash -c "tcam_usage_calculator -d -j $CONFIG_TO"
 ```
 
 ## Licence
