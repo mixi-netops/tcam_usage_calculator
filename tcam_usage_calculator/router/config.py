@@ -1,4 +1,5 @@
 import re
+from ..util import err
 
 
 class Config:
@@ -7,24 +8,28 @@ class Config:
         router config filepath.
     """
     def __init__(self, path):
-        self.raw = None
         self.path = path
+        self.raw = self.__read()
 
-        self.read()
+        self.firewall_line_list = self.__init_firewall_line_list()
 
-    def read(self):
+        self.filter_name = None
+        self.term_name = None
+        self.prefix_list_name = None
+
+        self._term_line_list = []
+        self._prefix_list_line_list = []
+
+    def __read(self):
         try:
-            f = open(self.path, 'r')
+            with open(self.path, 'r') as file:
+                config = file.read()
         except FileNotFoundError as e:
-            print(e, 'error occurred')
-            quit(1)
+            err(self.path + ' not found.')
 
-        config = f.read()
-        f.close()
+        return config
 
-        self.raw = config
-
-    def get_firewall_line_list(self):
+    def __init_firewall_line_list(self):
         firewall_line_list = []
 
         for line in self.raw.split('\n'):
@@ -33,35 +38,29 @@ class Config:
 
         return firewall_line_list
 
-    """
-    Extract the term defined in a specific filter
+    @property
+    def term_line_list(self):
+        if self._term_line_list is not []:
+            self._term_line_list = []
 
-    filterName: String
-    termName: String
-    """
-    def get_term_line_list(self, filter_name, term_name):
-        term_line_list = []
+        pattern = f"{'^.*' + self.filter_name + '.*' + self.term_name + '.*$'}"
 
-        for line in self.get_firewall_line_list():
-            pattern = f"{'^.*' + filter_name + '.*' + term_name + '.*$'}"
+        for line in self.firewall_line_list:
             if not re.match(pattern, line):
                 continue
             else:
-                term_line_list.append(line)
+                self._term_line_list.append(line)
 
-        return term_line_list
+        return self._term_line_list
 
-    """
-    Extract the 'prefix-list' defined in a specific filter
+    @property
+    def prefix_list_line_list(self):
+        if self._prefix_list_line_list is not []:
+            self._prefix_list_line_list = []
 
-    prefixListName: String
-    """
-    def get_prefix_list_line_list(self, prefix_list_name):
-        prefix_list_line_list = []
-        pattern = f"{'set policy-options prefix-list ' + prefix_list_name}"
-
+        pattern = f"{'set policy-options prefix-list ' + self.prefix_list_name}"
         for line in self.raw.split('\n'):
             if line.find(pattern) >= 0:
-                prefix_list_line_list.append(line)
+                self._prefix_list_line_list.append(line)
 
-        return prefix_list_line_list
+        return self._prefix_list_line_list

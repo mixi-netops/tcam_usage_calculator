@@ -1,6 +1,7 @@
 import re
 from .config import Config
 from ipaddress import summarize_address_range, IPv4Address
+from ..util import err
 
 
 class Calculator:
@@ -9,14 +10,11 @@ class Calculator:
         router config parameter.
     """
     def __init__(self, config):
+        if type(config) is not Config:
+            err(str(type(config)) + ' is not Config Class.')
+
         self.firewall_dict = {}
         self.firewall_cost_dict = {}
-
-        if type(config) is not Config:
-            nl = '\n'
-            print(f"{'ERROR!' + nl}{config + 'is not Config Class.'}")
-            quit(1)
-
         self.config = config
         self.protocol_name_to_num = {
             "afs": 1483, "bgp": 179, "biff": 512, "bootpc": 68, "bootps": 67, "chargen": 19, "cmd": 514,
@@ -63,7 +61,7 @@ class Calculator:
         filter_and_term_name_pattern = \
             r'^.* filter ([!-~]+) term ([!-~]+) .*$'
 
-        for line in self.config.get_firewall_line_list():
+        for line in self.config.firewall_line_list:
             match = re.search(filter_and_term_name_pattern, line)
             filter_name = match.group(1)
             term_name = match.group(2)
@@ -81,9 +79,12 @@ class Calculator:
     """
     def set_expanded_term_cost(self):
         for filter_name, terms in self.firewall_dict.items():
+            self.config.filter_name = filter_name
             for term_dict in terms:
                 for term_name in term_dict:
-                    term_line_list = self.config.get_term_line_list(filter_name=filter_name, term_name=term_name)
+                    self.config.term_name = term_name
+                    # term_line_list = self.config.get_term_line_list()
+                    term_line_list = self.config.term_line_list
                     raw_expanded_term_cost = \
                         self.get_term_src_prefix_count(term_line_list) * \
                         self.get_term_dst_prefix_count(term_line_list) * \
@@ -102,8 +103,8 @@ class Calculator:
         for line in term_line_list:
             if re.match(src_prefix_list_pattern, line):
                 match = re.search(src_prefix_list_pattern, line)
-                prefix_list_name = match.group(1)
-                count = len(self.config.get_prefix_list_line_list(prefix_list_name))
+                self.config.prefix_list_name = match.group(1)
+                count = len(self.config.prefix_list_line_list)
 
         return count
 
@@ -115,8 +116,8 @@ class Calculator:
         for line in term_line_list:
             if re.match(dst_prefix_list_pattern, line):
                 match = re.search(dst_prefix_list_pattern, line)
-                prefix_list_name = match.group(1)
-                count = len(self.config.get_prefix_list_line_list(prefix_list_name))
+                self.config.prefix_list_name = match.group(1)
+                count = len(self.config.prefix_list_line_list)
 
         return count
 
@@ -160,7 +161,10 @@ class Calculator:
         if name.isdigit():
             return name
 
-        return self.protocol_name_to_num[name]
+        try:
+            return self.protocol_name_to_num[name]
+        except KeyError:
+            err(name + ' protocol is an unknown protocol name.')
 
     """
     portList:
