@@ -16,25 +16,21 @@ def main():
 
     config_filepath = args.config[0]
     calculator = Calculator(Config(config_filepath))
-    calculator.create_firewall_dict()
-    calculator.set_expanded_term_cost()
 
     result_list = []
 
     if args.detail:
-        calculator.make_firewall_cost_dict()
         for name, cost in calculator.firewall_cost_dict.items():
             result_list.append({name: cost})
 
     if args.filter:
         filter_list = args.filter
-        calculator.make_firewall_cost_dict()
         for name, cost in calculator.firewall_cost_dict.items():
             if name in filter_list:
                 result_list.append({name: cost})
     else:
         # TotalCost is not displayed only when the --filter option is enabled
-        result_list.append({"TotalCost": calculator.get_total_term_cost()})
+        result_list.append({"TotalCost": calculator.total_term_cost})
 
     if args.json:
         print(json.dumps(result_list))
